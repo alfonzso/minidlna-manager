@@ -1,0 +1,5 @@
+#!/bin/bash
+set -ex
+git fetch --unshallow origin
+BUILD_NUMBER=$(git rev-list --count $SOURCE_COMMIT)
+docker build minidlna-man/ -f minidlna-man/Dockerfile -t ${IMAGE_NAME}-${BUILD_NUMBER}
