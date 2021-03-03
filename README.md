@@ -1,6 +1,8 @@
-# minidlna-manager
 ## Manage minidlna-server which is running in docker
-This app ( manager ) is a "simple" http server, which will restart minidlna-server container at a remote host or in local machine.
+
+### Main functionality: Restart minidlna server with rescan all of your media.
+
+This app ( manager ) is a "simple" http server, which will restart minidlna-server container at a remote host or in local host.
 
 ### Example for minidlna-server:
 ```yaml
