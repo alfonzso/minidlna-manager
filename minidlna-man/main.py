@@ -20,8 +20,6 @@ minidlna_server_container_name_pattern = os.getenv("MINIDLNA_SERVER_CONTAINER_NA
 
 # volumes
 minidlna_volume_enabled = bool(os.getenv("MINIDLNA_VOLUME_ENABLED", False))
-
-
 if minidlna_volume_enabled:
     minidlna_volume_name = os.getenv("MINIDLNA_VOLUME_NAME", "transmission-data")
     minidlna_volume_type = os.getenv("MINIDLNA_VOLUME_TYPE", "nfs")
