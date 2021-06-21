@@ -72,11 +72,6 @@ class MyServer(BaseHTTPRequestHandler):
         if minidlna_volume_enabled:
             create_vol = client.volumes.create(
                 name=minidlna_volume_name, driver='local',
-                # driver_opts={
-                #     'type': 'nfs',
-                #     'o': 'nfsvers=4,addr=192.168.1.121,nfsvers=4,nolock,soft',
-                #     'device': ':/mnt/hdd/transmission-workspace/downloads/complete/'
-                # },
                 driver_opts={
                     'type': minidlna_volume_type,
                     'o': minidlna_volume_opts,
@@ -90,8 +85,6 @@ class MyServer(BaseHTTPRequestHandler):
                 }
             }
 
-        # tst = vols_dict if minidlna_volume_enabled else {}
-        # tst = vols_dict
         minidlna_srvr = client.containers.run(
             image="vladgh/minidlna",
             detach=True,
