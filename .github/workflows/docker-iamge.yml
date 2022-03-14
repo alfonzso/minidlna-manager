@@ -1,0 +1,63 @@
+name: MiniMan docker build
+
+on:
+  workflow_dispatch:
+    inputs:
+      msg:
+        required: false
+        description: "Test"
+        default: "Manual push ?!"
+  # push:
+  #   branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
+  release:
+    types: # This configuration does not affect the page_build event above
+      - published
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    # - name: Set up QEMU
+    #   uses: docker/setup-qemu-action@master
+    #   with:
+    #     platforms: all
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Docker Login
+      uses: docker/login-action@v1.12.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # - name: Build the Docker image
+    #  run: docker build . --file Dockerfile --tag alfonzso/py-xlate:release-1.0.${{ github.run_number }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: minidlna-man/
+        push: true
+        # platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+        tags: alfonzso/minidlna-manager:release-0.0.${{ github.run_number }}
+        cache-from: type=registry,ref=alfonzso/minidlna-manager:buildcache
+        cache-to: type=registry,ref=alfonzso/minidlna-manager:buildcache,mode=max
+
+    # - name: Build
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     builder: ${{ steps.buildx.outputs.name }}
+    #     context: .
+    #     file: ./Dockerfile
+    #     platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+    #     push: true
+    #     tags: ${{ steps.prep.outputs.tags }}
